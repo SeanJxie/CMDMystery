@@ -36,6 +36,21 @@ void ConsoleGUI::set_font(SHORT wt, SHORT ht) {
     SetCurrentConsoleFontEx(m_consoleHandleOutput, FALSE, &cfi);
 }
 
+void ConsoleGUI::set_window_size(int wt, int ht) {
+    COORD coord; 
+    coord.X = wt; 
+    coord.Y = ht; 
+
+    SMALL_RECT newSizeRect; 
+    newSizeRect.Top = 0; 
+    newSizeRect.Left = 0; 
+    newSizeRect.Bottom = wt - 1; 
+    newSizeRect.Right = ht - 1; 
+
+    SetConsoleScreenBufferSize(m_consoleHandleOutput, coord);            
+    SetConsoleWindowInfo(m_consoleHandleOutput, true, &newSizeRect);      
+}
+
 void ConsoleGUI::get_desktop_resolution(int &wt, int &ht) {
     // Thanks to https://stackoverflow.com/a/8690641/11768102
 

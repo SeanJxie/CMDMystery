@@ -32,6 +32,7 @@ public:
     void disable_input();
     void enable_input();
     void set_font(SHORT wt, SHORT ht);
+    void set_window_size(int wt, int ht);
     void get_desktop_resolution(int &wt, int &ht);
     void set_console_col(int col_attr);
     void type_print(std::string str, int delay, bool nl);
