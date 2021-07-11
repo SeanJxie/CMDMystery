@@ -98,7 +98,7 @@ void ConsoleGUI::hide_scrollbar() {
 }
 
 void ConsoleGUI::type_print(std::string str, int delay, bool nl) {
-    for (int i = 0; i < str.length(); i++) {
+    for (int i = 0; i < (int)str.length(); i++) {
         std::cout << str[i];
         sleep_ms(delay);
     }

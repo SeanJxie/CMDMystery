@@ -1,4 +1,5 @@
 #include "console_gui.hpp"
+#include <direct.h>
 
 class CmdMysteryGame : public ConsoleGUI {
 public:
