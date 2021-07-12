@@ -1,2 +1,2 @@
 # CMDMystery
-Written entirely with the C++ standard library in Windows.
+Written entirely with the C++ standard library on Windows.
