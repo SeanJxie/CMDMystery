@@ -10,17 +10,7 @@ CmdMysteryGame::CmdMysteryGame() {
 
     System calls are used when it's just more convenient to do so.
     */
-
-    // Quick and dirty console clear.
-    system("cls"); 
-    
-    // Set fullscreen
-    toggle_fullscreen();
-
-    // Hide scrollbar, console cursor, and disable input interaction
-    hide_scrollbar();
-    hide_cursor(); 
-    disable_input();
+   dialogue_mode();
 }
 
 CmdMysteryGame::~CmdMysteryGame() {
@@ -45,7 +35,6 @@ void CmdMysteryGame::input_check(std::string prompt, std::string target) {
         std::cout << prompt;
         std::getline(std::cin, input);
         input = tolower_str(input);
-        std::cout << input << std::endl;
     }
 }
 
@@ -55,6 +44,26 @@ std::string CmdMysteryGame::tolower_str(std::string str) {
             ret += tolower(str[i]);
     }
     return ret;
+}
+
+void CmdMysteryGame::dialogue_mode() {
+    // Quick and dirty console clear.
+    system("cls"); 
+    
+    // Set fullscreen
+    toggle_fullscreen();
+
+    // Hide scrollbar, console cursor, and disable input interaction
+    hide_scrollbar();
+    hide_cursor(); 
+    disable_input();
+}
+
+
+void CmdMysteryGame::input_mode() {
+    FlushConsoleInputBuffer(m_consoleHandleInput); // Clear all the junk the player may have put in thje input buffer before input mode toggle.
+    toggle_fullscreen();
+    enable_input();
 }
 
 void CmdMysteryGame::start() {
@@ -90,93 +99,96 @@ s
     */
 
    
-    // Create first objective: A creepy haiku ---
-    std::string path(getenv("USERPROFILE"));
+    // First objective: A creepy haiku ---
+    std::string path(getenv("USERPROFILE")); // Store Users folder path.
 
-    std::ofstream firstfile(path + "/Desktop/not_her.txt");
-    firstfile << "look in the mirror\nit is not your reflection\nthat stares back at you\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhttps://canary.contestimg.wish.com/api/webimage/5deb6a46fda910005be254a4-large.jpg?cache_buster=5c21942e88830a124367a33ad8727804";
-    firstfile.close();
-
-    // Intro ---
     // Notice the longest string has length 29 and there are 4 lines to be printed.
     set_font((SHORT)(m_screenWt / 20), (SHORT)(m_screenHt / 7));
     SetConsoleTextAttribute(m_consoleHandleOutput, 12); // Red text
 
-    // sleep_ms(5000);
-    // type_print("Don't try to scream.", 400, true);
-    // sleep_ms(2000);
-    // type_print("Everyone is gone.", 400, true);
-    // sleep_ms(2000);
-    // type_print("Someone is here.", 300, true);
-    // sleep_ms(2000);
-    // type_print("Keep me alive.", 300, true);
-    // sleep_ms(2000);
-    // type_print("Talk to me.", 200, true);
-    // sleep_ms(2000);
-    // type_print("Out of left field.", 200, true);
-    // sleep_ms(2000);
-    // type_print("POETRY is key.", 100, true);
-    // sleep_ms(5000);
+    sleep_ms(5000);
+    type_print("Don't try to scream.", 400, true);
+    sleep_ms(2000);
+    type_print("Everyone is gone.", 400, true);
+    sleep_ms(2000);
+    type_print("Someone is here.", 300, true);
+    sleep_ms(2000);
+    type_print("Keep me alive.", 300, true);
+    sleep_ms(2000);
+    type_print("Talk to me.", 200, true);
+    sleep_ms(2000);
+    type_print("Out of left field.", 200, true);
+    sleep_ms(2000);
+    type_print("POETRY is key.", 200, true);
+    sleep_ms(5000);
 
-    // First user interaction ---
-    toggle_fullscreen();
+    // Generate clues ---
+    std::ofstream firstfile(path + "/Desktop/not_her.txt");
+    firstfile << "look in the mirror\nit is not your reflection\nthat stares back at you\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhttps://canary.contestimg.wish.com/api/webimage/5deb6a46fda910005be254a4-large.jpg?cache_buster=5c21942e88830a124367a33ad8727804";
+    firstfile.close();
+
+    // First objective user interaction ---
+    input_mode();
+
     set_font((SHORT)(m_screenWt / 100), (SHORT)(m_screenHt / 50));
-    enable_input();
     set_window_size(21, 21);
+
     input_check("> ", "haiku");
-    
-    // After first user interaction ---
-    system("cls"); 
+        
+    // Second objective: An image ---
+    dialogue_mode();
+
     system("color C0"); // Black fg with light-red bg. Kind of a weird hardcode but it'll do for now.
-    toggle_fullscreen();
-    hide_scrollbar();
-    hide_cursor(); 
-    disable_input();
     SetConsoleTextAttribute(m_consoleHandleOutput, 192); // Red text
     set_font((SHORT)(m_screenWt / 37), (SHORT)(m_screenHt / 3));
 
-     // Second objective: image.
-    // We want to lead the player on a little quest to find the coordinates of a town in Alberta, Canada named Picture Butte.
+    sleep_ms(5000);
+    type_print("from sea to C, there exists two keys.", 100, true); // Canada's motto is "From sea to sea"
+    sleep_ms(3000);
+    // Capital letters spell COORD
+    type_print("They cOme frOm up noRth.", 100, true);
+    sleep_ms(3000);
+    type_print("Do you recognize me?", 100, true);
+    sleep_ms(5000);    
 
+    // Generate clues ---
+    // We want to lead the player on a little quest to find the coordinates of a town in Alberta, Canada named Picture Butte.s
     mkdir("C:/ERVUOL");
     std::ofstream secondfile("C:/ERVUOL/sea.txt");
-
-    secondfile << "LO 49_52_23 LA ???_46_48"; // The question marks should be 112. The youtube video is: 112 ft BIGGIE & MASE - ONLY YOU
+    secondfile << "N 49 52 23 W ??? 46 48"; // The question marks should be 112. The youtube video is: 112 ft BIGGIE & MASE - ONLY YOU
     secondfile.close();
-
-    // sleep_ms(5000);
-    // type_print("from sea to C, there exists two keys.", 100, true); // Canada's motto is "From sea to sea"
-    // sleep_ms(3000);
-    // // Capital letters spell COORD
-    // type_print("They cOme frOm up noRth.", 100, true);
-    // sleep_ms(3000);
-    // type_print("Do you recognize me?", 100, true);
-    // sleep_ms(5000);    
-
     system("start msedge https://www.youtube.com/watch?v=D30u9m-nEoo");
 
-    toggle_fullscreen();
+     // Second objective user interaction ---
+    input_mode();
+
     set_font((SHORT)(m_screenWt / 100), (SHORT)(m_screenHt / 50));
-    enable_input();
     set_window_size(38, 38);
+
     input_check("> ", "Picture Butte");
 
     mkdir((path + "/Pictures/Butte").c_str());
     write_file_from_hex(png_hex, 1370990, path + "/Pictures/Butte/mirror.png");
 
-    system("cls"); 
+    // Second objective achievement ---
+    dialogue_mode();
+
     system("color C0"); // Black fg with light-red bg. Kind of a weird hardcode but it'll do for now.
-    toggle_fullscreen();
-    hide_scrollbar();
-    hide_cursor(); 
-    disable_input();
     SetConsoleTextAttribute(m_consoleHandleOutput, 192); // Red text
     set_font((SHORT)(m_screenWt / 20), (SHORT)(m_screenHt));
+
     sleep_ms(4000);
     type_print("The gallery is open.", 300, true);
     sleep_ms(4000);
 
-    // Third objective: audio.
+    // Third objective: audio ---
     // It's some morse code that translates to: its quiet. why me? why did it have to be me? its dark and Im all alone. will you come play with me?
+    input_mode();
+
+    set_font((SHORT)(m_screenWt / 100), (SHORT)(m_screenHt / 50));
+    set_window_size(38, 38);
+
+    input_check("NOT IMPLEMENTED YET. SEAN THINK OF SOMETHING TO PUT HERE. > ", "");
+
     write_file_from_hex(mp3_hex, 1923246, path + "/Music/play.mp3");
 }
