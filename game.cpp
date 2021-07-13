@@ -10,7 +10,7 @@ CmdMysteryGame::CmdMysteryGame() {
 
     System calls are used when it's just more convenient to do so.
     */
-   dialogue_mode();
+    dialogue_mode();
 }
 
 CmdMysteryGame::~CmdMysteryGame() {
@@ -183,6 +183,8 @@ s
 
     // Third objective: audio ---
     // It's some morse code that translates to: its quiet. why me? why did it have to be me? its dark and Im all alone. will you come play with me?
+    
+    // --- INCOMPLETE ---
     input_mode();
 
     set_font((SHORT)(m_screenWt / 100), (SHORT)(m_screenHt / 50));

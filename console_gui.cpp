@@ -5,6 +5,7 @@ ConsoleGUI::ConsoleGUI() {
     m_consoleHandleInput  = GetStdHandle(STD_INPUT_HANDLE);
     m_windowHandle        = GetConsoleWindow();
     GetConsoleScreenBufferInfo(m_consoleHandleOutput, (PCONSOLE_SCREEN_BUFFER_INFO)&m_screenBufferInfo);
+    GetConsoleMode(m_consoleHandleInput, &m_originalConsoleMode);
     get_desktop_resolution(m_screenWt, m_screenHt);
 }
 
@@ -14,14 +15,11 @@ void ConsoleGUI::update_sbi() {
 }
 
 void ConsoleGUI::disable_input() {
-    // We need to use the input handle to toggle ss
-    // Thanks to https://stackoverflow.com/a/56017313/11768102 for the flag.
-    SetConsoleMode(m_consoleHandleInput, DISABLE_INPUT_FLAG);
+    EnableWindow(m_windowHandle, false);
 }
 
 void ConsoleGUI::enable_input() {
-    // Quite literally, (NOT DISABLE_INPUT_FLAG) enables input.
-    SetConsoleMode(m_consoleHandleInput, ~DISABLE_INPUT_FLAG);
+    EnableWindow(m_windowHandle, true);
 }
 
 void ConsoleGUI::set_font(SHORT wt, SHORT ht) {

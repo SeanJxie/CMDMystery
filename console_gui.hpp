@@ -1,8 +1,6 @@
 #ifndef CONSOLE_GUI_HPP
 #define CONSOLE_GUI_HPP
 
-#define NOMINMAX
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -10,7 +8,6 @@
 #include <thread>
 #include <Windows.h>
 
-#define DISABLE_INPUT_FLAG (ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS)
 
 class ConsoleGUI {
 public:
@@ -20,6 +17,7 @@ public:
     HWND                       m_windowHandle;
     CONSOLE_CURSOR_INFO        m_cursorInfo;
     COORD                      m_visibleScreenBufferSize;
+    DWORD                      m_originalConsoleMode;
     int                        m_screenWt, m_screenHt;
 
     ConsoleGUI();
