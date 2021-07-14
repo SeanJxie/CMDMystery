@@ -10,6 +10,7 @@ CmdMysteryGame::CmdMysteryGame() {
 
     System calls are used when it's just more convenient to do so.
     */
+    SetConsoleMode(m_consoleHandleInput, ENABLE_EXTENDED_FLAGS | ~ENABLE_MOUSE_INPUT);
     dialogue_mode();
 }
 
